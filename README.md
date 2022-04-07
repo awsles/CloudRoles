@@ -1,6 +1,9 @@
 # CloudRoles
 This respository contains the role / policy definitions for AWS and Azure along with associated tools.
 
+**NOTE:** The roles defined in this repository have not been updated to reflect new cloud services
+which may be available.
+
 # Standard Roles
 User roles (used for cloud interactive login) shall have standardized role definitions (naming and permissions) across
 all Azure subscriptions and AWS accounts, respectively. This serves to minimize the number of customized role
@@ -21,6 +24,7 @@ Furthermore, role names in AWS may be prefixed by the environment and AWS accoun
 
 Within AWS, the permissions associated with a role are defined in Policy, whereas in Azure, thet are defined by roles.
 In both cloud environments, the names are all share a common prefix, which is usually "Cloud".
+You can get a list of AWS services and IAM policy permissions at https://github.com/leswaters/AwsServices.
 
 
 ### Why Use Custom Roles?
