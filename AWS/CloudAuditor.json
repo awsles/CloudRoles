@@ -1,0 +1,21 @@
+// CloudAuditor 
+// Grants full access to CloudWatch, CloudWatch Events, CloudWatch Logs, CloudTrail, Simple Notification Service (SNS), and	Guard Duty.
+// Combine with CloudReader policy to create CloudAuditor role.
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CloudAuditLogAdmin",
+            "Effect": "Allow",
+            "Action": [
+				"guardduty:*",
+				"events:*",
+				"cloudtrail:*",
+				"cloudwatch:*",
+				"sns:*",
+				"logs:*"
+			],
+            "Resource": "*"
+		}
+	]
+}

@@ -1,0 +1,58 @@
+// CloudDataServiceOperator
+// Grants ability to start, stop, and perform basic management of data services. Generally disallows access to the data itself.
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CloudDataServiceOperator",
+            "Effect": "Allow",
+            "Action": [
+                "athena:BatchGet*",
+                "athena:Get*",
+                "cloudwatch:DeleteAlarms",
+                "cloudwatch:DescribeAlarmHistory",
+                "cloudwatch:DescribeAlarms",
+                "cloudwatch:DescribeAlarmsForMetric",
+                "cloudwatch:ListMetrics",
+                "cloudwatch:PutMetricAlarm",
+                "dynamodb:BatchGet*",
+                "dynamodb:Get*",
+                "dynamodb:List*",
+                "dynamodb:Tag*",
+                "dynamodb:Untag*",
+                "elasticmapreduce:AddInstanceGroups",
+                "elasticmapreduce:AddTags",
+                "elasticmapreduce:Describe*",
+                "elasticmapreduce:List*",
+                "elasticmapreduce:ModifyInstanceGroups",
+                "elasticmapreduce:PutAutoScalingPolicy",
+                "elasticmapreduce:RemoveAutoScalingPolicy",
+                "elasticmapreduce:RemoveTags",
+                "elasticmapreduce:ViewEventsFromAllClustersInConsole",
+                "glue:Get*",
+                "glue:Start*",
+                "glue:Stop*",
+                "iam:GetRole",
+                "logs:GetLogEvents",
+                "rds:AddTagsToResource",
+                "rds:ApplyPendingMaintenanceAction",
+                "rds:CreateEventSubscription",
+                "rds:DeleteEventSubscription",
+                "rds:Describe*",
+                "rds:Download*",
+                "rds:List*",
+                "rds:RebootDBInstance",
+                "rds:RemoveTagsFromResource",
+                "rds:Start*",
+                "rds:Stop*",
+                "redshift:Describe*",
+                "redshift:Reboot*",
+                "redshift:Reset*",
+                "sns:CreateTopic",
+                "sns:Get*",
+                "sns:List*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

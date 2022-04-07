@@ -1,0 +1,627 @@
+// Cloud Role Definitions
+// Substitution variables include: %%RoleNamePrefix%% and %%AccountID%%
+//
+// Updated: 13-Dec-19 by Lester Waters
+//
+//
+ 
+[		// IMPORTANT!!!
+//-----------------------------------------------------------------------------
+// CloudAdmin
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "CloudAdmin",
+		"FullRoleName": "%%RoleNamePrefix%%-CloudAdmin",
+		"Description": "Top Level Administrator – access to all cloud services.",
+		"Scope": "*",			
+		"RoleType": "Mandatory",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-CloudAdmin",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": [					
+				"g-AR-HostingArchitecture",
+				"g-UK-Cloud-Infrastructure"
+			],
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::aws:policy/AdministratorAccess",
+				"PolicyName":  "AdministratorAccess"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Reader
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "Reader",
+		"FullRoleName": "%%RoleNamePrefix%%-Reader",
+		"Description": "Grants read-only access to all extended configuration information but excludes data access.",
+		"Scope": "*",			
+		"RoleType": "Mandatory",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-Reader",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": [					
+				"g-AR-CloudSource"
+			],
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Developer
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "Developer",
+		"FullRoleName": "%%RoleNamePrefix%%-Developer",
+		"Description": "Grants access to most IaaS and PaaS services but excludes network configuration capabilities.",
+		"Scope": [
+			"*devtest*",			
+			"*pipeline*"	
+		],
+		"RoleType": "Dev Only",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-Developer",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": null,					
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudDeveloper",
+				"PolicyName":  "CloudDeveloper"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudDeveloperIAM",
+				"PolicyName":  "CloudDeveloperIAM"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Troubleshooter
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "Troubleshooter",
+		"FullRoleName": "%%RoleNamePrefix%%-Troubleshooter",
+		"Description": "Can view logs, configurations, and create VM and storage snapshots for troubleshooting.",
+		"Scope": "*",			
+		"RoleType": "Recommended",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-Troubleshooter",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": null,					
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudTroubleshooter",
+				"PolicyName":  "CloudTroubleshooter"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Data Service Admin
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "DataServiceAdmin",
+		"FullRoleName": "%%RoleNamePrefix%%-DataServiceAdmin",
+		"Description": "Can perform most administrative functions on data services, excluding the provisioning of access permissions.",
+		"Scope": "*",			
+		"RoleType": "Optional",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-DataServiceAdmin",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": null,					
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudDataServiceAdmin",
+				"PolicyName":  "CloudDataServiceAdmin"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Data Service Operator
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "DataServiceOperator",
+		"FullRoleName": "%%RoleNamePrefix%%-DataServiceOperator",
+		"Description": "Can monitor the health of data services and perform minor configuration changes such as starting & stopping services, maintenance, and resource tagging.",
+		"Scope": "*",			
+		"RoleType": "Optional",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-DataServiceOperator",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": null,					
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudDataServiceOperator",
+				"PolicyName":  "CloudDataServiceOperator"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Data Scientist
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "DataScientist",
+		"FullRoleName": "%%RoleNamePrefix%%-DataScientist",
+		"Description": "Grants permission to create, manage, and run queries on Hadoop / MapReduce clusters and to perform data analytics.",
+		"Scope": "*",			
+		"RoleType": "Optional",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-DataScientist",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": null,					
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudDataScientist",
+				"PolicyName":  "CloudDataScientist"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// NetworkAdmin (revised)
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "NetworkAdmin",
+		"FullRoleName": "%%RoleNamePrefix%%-NetworkAdmin",
+		"Description": "Can provision network-specific controls, including network security groups, firewalls, and WAF.",
+		"Scope": "*",			
+		"RoleType": "Mandatory",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-NetworkAdmin",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "fordm3",
+			"Members": [
+				"g-AR-TN-NST-Admin"
+				],
+			"Notes": "**RESTRICTED** `nOwner: Owner: Matt Ford (uk\fordm3) SAP: 22339"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+// Legacy Definition:
+//				{
+//					"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/Network-CustomPolicy",
+//					"PolicyName":  "Network-CustomPolicy"
+//				},
+//				{
+//					"PolicyArn":  "arn:aws:iam::aws:policy/ResourceGroupsandTagEditorFullAccess",
+//					"PolicyName":  "ResourceGroupsandTagEditorFullAccess"
+//				},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudNetworkAdmin",
+				"PolicyName":  "CloudNetworkAdmin"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::aws:policy/job-function/NetworkAdministrator",
+				"PolicyName":  "NetworkAdministrator"
+			}
+		]
+	},	
+//-----------------------------------------------------------------------------
+// FirewallOperator
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "FirewallOperator",
+		"FullRoleName": "%%RoleNamePrefix%%-FirewallOperator",
+		"Description": "Grants ability to manage security groups and PaaS firewalls.",
+		"Scope": "*",			
+		"RoleType": "Recommended",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-FirewallOperator",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "fordm3",
+			"Members": null,					
+			"Notes": "**RESTRICTED** `nOwner: Owner: Matt Ford (uk\fordm3) SAP: 22339"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudFirewallOperator",
+				"PolicyName":  "CloudFirewallOperator"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Cloud Auditor
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "CloudAuditor",
+		"FullRoleName": "%%RoleNamePrefix%%-CloudAuditor",
+		"Description": "Grants full access to CloudWatch, CloudWatch Events, CloudWatch Logs, CloudTrail, Simple Notification Service (SNS), and Guard Duty.",
+		"Scope": "*",			
+		"RoleType": "Mandatory",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-CloudAuditor",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "watersl4",
+			"Members": null,
+			"Notes": "**RESTRICTED** `nOwner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudAuditor",
+				"PolicyName":  "CloudAuditor"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Cloud Service Operator
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "ServiceOperator",
+		"FullRoleName": "%%RoleNamePrefix%%-ServiceOperator",
+		"Description": "Can monitor, start/stop, control auto-scaling, & tag IaaS & PaaS services.",
+		"Scope": "*",			
+		"RoleType": "Mandatory",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-ServiceOperator",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": null,
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudServiceOperator",
+				"PolicyName":  "CloudServiceOperator"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Cloud Service Admin
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "ServiceAdmin",
+		"FullRoleName": "%%RoleNamePrefix%%-ServiceAdmin",
+		"Description": "Can manage most IaaS and PaaS services except access permissions.",
+		"Scope": "*",			
+		"RoleType": "Mandatory",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-ServiceAdmin",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": null,
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudServiceAdmin",
+				"PolicyName":  "CloudServiceAdmin"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// Security Admin  (revised role)
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "SecurityAdmin",
+		"FullRoleName": "%%RoleNamePrefix%%-SecurityAdmin",
+		"Description": "Can maintain security-specific controls including Security Hub, GuardDuty, and more but excludes role-based access.",
+		"Scope": "*",			
+		"RoleType": "Mandatory",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-SecurityAdmin",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "watersl4",
+			"Members": [
+				"g-PR-SecurityAdmin-for-Cloud-Access"
+				],
+			"Notes": "**RESTRICTED** `nOwner: Sebastian Kinnaird (kinnairs) SAP: 846887"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudSecurityAdmin",
+				"PolicyName":  "CloudSecurityAdmin"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::aws:policy/SecurityAudit",
+				"PolicyName":  "SecurityAudit"
+			}
+		]
+	},	
+//-----------------------------------------------------------------------------
+// Key Vault Admin
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "KeyVaultAdmin",
+		"FullRoleName": "%%RoleNamePrefix%%-KeyVaultAdmin",
+		"Description": "Can manage key vaults, secrets, & parameter stores.",
+		"Scope": "*",			
+		"RoleType": "Recommended",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-KeyVaultAdmin",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "watersl4",
+			"Members": null,
+			"Notes": "**RESTRICTED** `nOwner: Sebastian Kinnaird (kinnairs) SAP: 846887 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudSecurityAdmin",
+				"PolicyName":  "CloudSecurityAdmin"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::aws:policy/SecurityAudit",
+				"PolicyName":  "SecurityAudit"
+			}
+		]
+	},	
+//-----------------------------------------------------------------------------
+// User Access Admin
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191016",
+		"RoleName": "UserAccessAdmin",
+		"FullRoleName": "%%RoleNamePrefix%%-UserAccessAdmin",
+		"Description": "Can provision user RBAC access policies and permissions for all services.",
+		"Scope": "*",
+		"RoleType": "Mandatory",
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-UserAccessAdmin",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "neytonp",
+			"Members": null,
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Sebastian Kinnaird (kinnairs) SAP: 846887"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::aws:policy/IAMFullAccess",
+				"PolicyName":  "IAMFullAccess"
+			}
+		]
+	},	
+//-----------------------------------------------------------------------------
+// AWSBatchServiceRole
+// SEE: https://docs.aws.amazon.com/batch/latest/userguide/service_IAM_role.html
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191128",
+		"RoleName": "AWSBatchServiceRole",
+		"FullRoleName": "AWSBatchServiceRole",
+		"Description": "AWS Batch makes calls to other AWS services on your behalf to manage the resources that you use with the service.",
+		"Scope": "*",
+		"RoleType": "Optional",
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "CloudServiceBoundary",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/AWSBatchServiceRole",
+				"PolicyName":  "AWSBatchServiceRole"
+			}
+		]
+	},	
+//-----------------------------------------------------------------------------
+// BGX-Prod-TEMP-Deploy role for 716620808243 (Robert Read)
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20200109",
+		"RoleName": "TEMP-Deploy",
+		"FullRoleName": "%%RoleNamePrefix%%-TEMP-Deploy",
+		"Description": "GX-Prod-TEMP-Deploy role for 716620808243 (Robert Read)",
+		"Scope": "*",			// "*" or list of AWS account numbers or name match
+		"RoleType": "TestRole",	// Whether role is required in accounts within scope
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-TEMP-Deploy",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "",
+			"Members": [					// SAMAccountNames or UPNs
+			],
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "CloudServiceBoundary",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudServiceAdmin",
+				"PolicyName":  "CloudReader"
+			},
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/BGX-Prod-Access-Policy",
+				"PolicyName":  "CloudReader"
+			}
+		]
+	},
+//-----------------------------------------------------------------------------
+// TEST ROLE
+//-----------------------------------------------------------------------------
+	{
+		"LastUpdate": "20191213",
+		"RoleName": "TestRole1",
+		"FullRoleName": "%%RoleNamePrefix%%-TestRole1",
+		"Description": "Test Role 1",
+		"Scope": "*",			// "*" or list of AWS account numbers or name match
+		"RoleType": "TestRole",	// Whether role is required in accounts within scope
+		"ADGroupUK": {
+			"Name":	"g-PR-AWS-%%AccountID%%-%%RoleNamePrefix%%-TestRole1",
+			"OU": "OU=AWSRoles,OU=MGMTPortals,OU=CloudServices,OU=Groups,DC=uk,DC=Cloudplc,DC=com",
+			"ManagedBy": "watersl4",
+			"Members": [					// SAMAccountNames or UPNs
+				"g-AR-HostingArchitecture",
+				"g-UK-Cloud-Infrastructure",
+				"watersl4"
+			],
+			"Notes": "**RESTRICTED** `nOwner: Paul Neyton (neytonp) SAP: 61609 `nCo-owner: Lester Waters (watersl4) SAP: 847723"
+		},
+		"MaxSessionDuration": 3600,
+		"Path": "/",
+		"PermissionsBoundary": "CloudServiceBoundary",
+		"Tags": {},
+		"AttachedPolicies":
+		[
+			{
+				"PolicyArn":  "arn:aws:iam::%%AccountID%%:policy/CloudReader",
+				"PolicyName":  "CloudReader"
+			}
+		]
+	}
+//-----------------------------------------------------------------------------
+// END
+//-----------------------------------------------------------------------------
+]		// IMPORTANT!!!
+

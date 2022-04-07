@@ -1,0 +1,24 @@
+// This example shows how to grant access to an S3 bucket to another AWS account.
+// The Principal may be "root" (meaning any user) or a specific user or a specific role
+// in the target account.
+{
+    "Version": "2012-10-17",
+    "Id": "S3PolicyId1",
+    "Statement": [
+        {
+            "Sid": "crossaccount",
+            "Effect": "Allow",
+            "Principal": "arn:aws:iam::971866432408:root",
+            "Action": [
+                "s3:GetObject",
+                "s3:GetAccountPublicAccessBlock",
+                "s3:ListJobs",
+                "s3:HeadBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::etdm/*",
+                "arn:aws:s3:::etdm"
+            ]
+        }
+    ]
+}

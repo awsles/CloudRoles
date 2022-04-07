@@ -1,0 +1,137 @@
+// CloudServiceBoudary
+// Boundary policy for all application App- roles created by developers.
+// The actual set of permissions is usually less, depending on the policies attached to the role.
+// This would be the Boundary policy for most roles, excluding IAM and Security-specific roles.
+// The CloudAdmin role would also be subject to this boundary policy (any reason not to?).
+//
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CloudServiceBoundaryNotActions20190419",
+			"Effect": "Allow",
+            "NotAction": [
+                "organizations:*",
+                "account:*",
+				"directconnect:*",
+				"ds:*",
+				"guardduty:*",
+				"securityhub:*",
+				"sso:*"
+            ],
+            "Resource": "*"
+        },
+        {
+			"Sid": "CloudServiceBoundaryActions20190419",
+            "Effect": "Allow",
+            "Action": [
+                "organizations:DescribeOrganization",
+                "account:ListRegions",
+				"directconnect:Describe*",
+				"ds:Get*",
+				"ds:List*",
+				"guardduty:Get*",
+				"guardduty:List*",
+				"organizations:Describe*",
+				"organizations:ListAWSServiceAccessForOrganization",
+				"organizations:ListParents",
+				"organizations:ListPolicies*",
+				"organizations:ListRoots",
+				"organizations:ListTargetsForPolicy",
+				"securityhub:Get*",
+				"securityhub:List*",
+				"sso:Get*",
+				"sso:List*"
+			],
+            "Resource": "*"
+        },
+		{
+			"Sid": "ProtectSecurityCloudwatch",
+			"Effect": "Deny",
+			"Action": [
+				"cloudwatch:Delete*",
+				"cloudwatch:Put*"
+			],
+            "Resource": [
+				"arn:aws:cloudwatch::alarm:Security*",
+				"arn:aws:cloudwatch:::dashboard/Security**"
+			]        
+        },
+		{
+			"Sid": "PreventPoliciesStartingWithAmazonOrAWS",
+			"Effect": "Deny",
+			"Action": [
+				"iam:Create*",
+				"iam:Delete*",
+				"iam:Put*",
+				"iam:Update*"
+			],
+			"Resource": "*",
+			"Condition": {
+				"ArnEquals": {
+					"iam:PolicyARN": [
+						"arn:aws:iam::*:policy/Amazon*",
+						"arn:aws:iam::*:policy/AWS*"
+					]
+				}
+			}
+        },
+		{
+			"Sid": "ProtectCloudPolicies",
+			"Effect": "Deny",
+			"Action": [
+				"iam:Attach*",
+				"iam:Detach*",
+				"iam:Create*",
+				"iam:Delete*",
+				"iam:Put*",
+				"iam:Update*"
+			],
+			"Resource": "*",
+			"Condition": {
+				"ArnEquals": {
+					"iam:PolicyARN": [
+						"arn:aws:iam::*:policy/Cloud*"
+					]
+				}
+			}
+        },
+		{
+			"Sid": "ProtectCloudRoles",
+			"Effect": "Deny",
+			"Action": [
+				"iam:Attach*",
+				"iam:Detach*",
+				"iam:Create*",
+				"iam:Delete*",
+				"iam:Put*",
+				"iam:Update*"
+			],
+			"Resource": "*",
+			"Condition": {
+				"ArnEquals": {
+					"iam:RoleARN": [
+						"arn:aws:iam::*:role/Cloud*",
+						"arn:aws:iam::*:role/CloudAdmin"
+					]
+				}
+			}
+        },
+		{
+			"Sid": "ProtectCertainTags",
+			"Effect": "Deny",
+			"Action": [
+				"tag:TagResources",
+				"tag:UntagResources"
+			],
+			"Resource": "*",
+			"Condition": {
+				"StringNotEquals": {
+					"aws:TagKeys": [
+						"CostCenter"
+					]
+				}
+			}
+        }
+	]
+}

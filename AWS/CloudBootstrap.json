@@ -1,0 +1,52 @@
+// CloudBootstrap 
+// Enables bootstraping initial configurations into new AWS accounts via AssumeRole automation.
+// Grants full access to IAM, CloudWatch, CloudWatch Events, CloudWatch Logs, CloudTrail, Simple Notification Service SNS, and Guard Duty.
+// Used as a TEMPORARY role which should be deleted once the account has been configured.
+// The associated role name MUST be "CloudBootstrap" with a TRUST relationship to XXXXXXXXXXXX so that other automation processes will work.
+// Trust must be established with Security Production account.
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CloudBootstrap20191111",
+            "Effect": "Allow",
+            "Action": [
+                "guardduty:*",
+                "events:*",
+                "cloudtrail:*",
+                "cloudwatch:*",
+                "sns:*",
+                "logs:*",
+				"sts:DecodeAuthorizationMessage"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudBootstrapIAM20191115",
+            "Effect": "Allow",
+            "Action": [
+				"iam:*",
+				"organizations:*"
+			],
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudBootstrapIAM217Sep19",
+            "Effect": "Allow",
+            "Action": "iam:*",
+            "Resource": [
+                "arn:aws:iam::*:saml-provider/*",
+                "arn:aws:iam::*:policy/*",
+                "arn:aws:iam::*:oidc-provider/*",
+                "arn:aws:iam::*:instance-profile/*",
+                "arn:aws:iam::*:user/*",
+                "arn:aws:iam::*:role/*",
+                "arn:aws:iam::*:server-certificate/*",
+                "arn:aws:iam::*:sms-mfa/*",
+                "arn:aws:iam::*:access-report/*",
+                "arn:aws:iam::*:group/*",
+                "arn:aws:iam::*:mfa/*/*"
+            ]
+        }
+    ]
+}

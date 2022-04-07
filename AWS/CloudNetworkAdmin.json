@@ -1,0 +1,133 @@
+\\ CloudNetworkAdmin
+\\ Can provision network-specific controls, including network security groups, firewalls, and WAF.
+\\ NOTE: Typically, this is combined with the CloudReader and NetworkAdministrator (built-in) policies.
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "NetworkCustomPolicy20191211",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:CancelUpdateStack",
+                "cloudformation:ContinueUpdateRollback",
+                "cloudformation:CreateChangeSet",
+                "cloudformation:CreateStack",
+                "cloudformation:CreateStackInstances",
+                "cloudformation:CreateStackSet",
+                "cloudformation:CreateUploadBucket",
+                "cloudformation:DeleteChangeSet",
+                "cloudformation:DeleteStack",
+                "cloudformation:DeleteStackInstances",
+                "cloudformation:DeleteStackSet",
+                "cloudformation:DescribeAccountLimits",
+                "cloudformation:DescribeChangeSet",
+                "cloudformation:DescribeStackEvents",
+                "cloudformation:DescribeStackInstance",
+                "cloudformation:DescribeStackResource",
+                "cloudformation:DescribeStackResources",
+                "cloudformation:DescribeStacks",
+                "cloudformation:DescribeStackSet",
+                "cloudformation:DescribeStackSetOperation",
+                "cloudformation:EstimateTemplateCost",
+                "cloudformation:ExecuteChangeSet",
+                "cloudformation:GetStackPolicy",
+                "cloudformation:GetTemplate",
+                "cloudformation:GetTemplateSummary",
+                "cloudformation:ListChangeSets",
+                "cloudformation:ListExports",
+                "cloudformation:ListImports",
+                "cloudformation:ListStackInstances",
+                "cloudformation:ListStackResources",
+                "cloudformation:ListStacks",
+                "cloudformation:ListStackSetOperationResults",
+                "cloudformation:ListStackSetOperations",
+                "cloudformation:ListStackSets",
+                "cloudformation:SetStackPolicy",
+                "cloudformation:SignalResource",
+                "cloudformation:StopStackSetOperation",
+                "cloudformation:UpdateStack",
+                "cloudformation:UpdateStackInstances",
+                "cloudformation:UpdateStackSet",
+                "cloudformation:UpdateTerminationProtection",
+                "cloudformation:ValidateTemplate",
+                "cloudwatch:*",
+				"health:*",
+				"sts:DecodeAuthorizationMessage",
+                "ram:*",
+                "s3:*",
+                "sns:*",
+				"wafv2:*",
+				"networkmanager:*",
+				"sts:DecodeAuthorizationMessage",
+                "support:*"
+            ],
+            "Resource": "*"
+        },
+		{
+			"Sid": "EC2extrapermissions20191111",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeAccountAttributes",
+				"ec2:CreateKeyPair",
+				"ec2:DeleteKeyPair",
+				"ec2:ImportKeyPair",
+				"ec2:DescribeKeyPair",
+				"ec2:RunInstances",
+				"ec2:RebootInstances",
+				"ec2:StopInstances",
+				"ec2:StartInstances",
+				"ec2:TerminateInstances",
+				"ec2:MonitorInstances",
+				"ec2:UnmonitorInstances"
+			],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowTransitGatewayRole",
+            "Effect": "Allow",
+            "Action": [
+				"iam:CreateServiceLinkedRole",
+				"iam:DeleteServiceLinkedRole"
+			],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:AWSServiceName": "transitgateway.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Sid": "NetworkCustomPolicyEMTFOA",
+            "Effect": "Allow",
+            "Action": [
+                "acm:AddTagsToCertificate",
+                "acm:DescribeCertificate",
+                "acm:GetCertificate",
+                "acm:ImportCertificate",
+                "acm:ListCertificates",
+                "acm:ListTagsForCertificate",
+                "acm:RemoveTagsFromCertificate",
+                "route53:*",
+                "route53resolver:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ResourceGroupsandTagEditorFullAccess",
+            "Effect": "Allow",
+            "Action": [
+                "tag:getResources",
+                "tag:getTagKeys",
+                "tag:getTagValues",
+                "tag:TagResources",
+                "tag:UntagResources",
+                "tag:AddResourceTags",
+                "tag:RemoveResourceTags",
+                "resource-groups:*",
+                "cloudformation:DescribeStacks",
+                "cloudformation:ListStackResources"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

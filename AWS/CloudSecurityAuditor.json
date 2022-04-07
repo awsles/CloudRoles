@@ -1,0 +1,77 @@
+\\ CloudSecurityAuditor
+\\ 
+\\ https://github.com/awslabs/aws-securityhub-multiaccount-scripts
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_operators.html
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#service-linked-role-permissions
+\\ 
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+			"Sid": "AllowServiceLinkedRoles20190929",
+			"Effect": "Allow",
+            "Action": [
+				"iam:CreateServiceLinkedRole",
+				"iam:DeleteServiceLinkedRole",
+				"iam:GetServiceLinkedRoleDeletionStatus"
+			],
+            "Resource": "arn:aws:iam::*:role/aws-service-role/*",
+            "Condition": {
+                "StringLike": {
+                    "iam:AWSServiceName": [
+                        "securityhub.amazonaws.com",
+						"guardduty.amazonaws.com",
+                        "config.amazonaws.com"
+                    ]
+                }
+            }
+        },
+        {
+			"Sid": "FullSecurityServices20191211",
+			"Effect": "Allow",
+            "Action": [
+				"securityhub:*",
+				"guardduty:*",
+				"sts:DecodeAuthorizationMessage",
+				"support:*"
+			],
+            "Resource": "*"
+        },
+        {
+			"Sid": "AllowConfigDeliveryChannel20190929",
+			"Effect": "Allow",
+            "Action": [
+                "config:DescribeConfigurationRecorders",
+                "config:DescribeDeliveryChannels",
+                "config:DescribeConfigurationRecorderStatus",
+                "config:DeleteConfigurationRecorder",
+                "config:DeleteDeliveryChannel",
+                "config:PutConfigurationRecorder",
+                "config:PutDeliveryChannel",
+                "config:StartConfigurationRecorder"
+            ],
+            "Resource": "*"
+        },
+        {
+			"Sid": "AllowPassRoleForConfig20190929",
+			"Effect": "Allow",
+            "Action": [
+				"iam:ListRoles",
+				"iam:PassRole"
+			]
+            "Resource": "arn:aws:iam::*:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig",
+        },
+        {
+			"Sid": "AllowConfigBuckets20190929",
+			"Effect": "Allow",
+            "Action": [
+                "s3:CreateBucket",
+                "s3:PutBucketPolicy",
+                "s3:ListBucket"
+            ],
+            "Resource": "arn:aws:s3:::config-bucket-*"
+        }
+    ]
+}

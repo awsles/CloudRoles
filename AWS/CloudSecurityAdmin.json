@@ -1,0 +1,68 @@
+\\ CloudSecurityAdmin
+\\ Can maintain security-specific controls except role-based access.
+\\ Typically, this is combined with the CloudReader, and the SecurityAudit (built-in) policies.
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+			"Sid": "CloudSecurityAdmin20191118",
+			"Effect": "Allow",
+			"Action": [
+                "cognito-sync:QueryRecords",
+                "config:Deliver*",						// Snapshot!!
+				"connect:GetFederationToken",
+                "dlm:Get*",
+                "ds:Verify*",
+                "elasticmapreduce:View*",			// FIND?
+                "fsx:Describe*",					// FIND?
+                "fsx:List*",						// FIND?
+                "globalaccelerator:Describe*",		// 
+                "globalaccelerator:List*",			//
+                "glue:BatchGetPartition",			//
+                "kinesisvideo:Describe*",
+                "kms:Get*",
+                "lightsail:Download*",
+                "mobilehub:Validate*",
+                "mobilehub:Verify*",
+                "rds:Download*",
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:List*",
+                "securityhub:Get*",
+                "securityhub:List*",
+                "serverlessrepo:Get*",
+                "serverlessrepo:SearchApplications",
+                "sts:DecodeAuthorizationMessage",
+                "swf:Get*",
+                "workmail:Get*",
+                "workmail:List*",
+                "workmail:Search*",
+				"sts:DecodeAuthorizationMessage",
+				"support:*"
+           ],
+            "Resource": "*"
+			},
+			{
+				"Sid": "AWSSecurityHubFullAccess1",
+				"Effect": "Allow",
+				"Action": [
+					"securityhub:*",
+					"guardduty:*",
+					"logs:*",
+					"inspector:*",
+					"trustedadvisor:*"
+				],
+				"Resource": "*"
+			},
+			{
+				"Sid": "AWSSecurityHubFullAccess2",
+				"Effect": "Allow",
+				"Action": "iam:CreateServiceLinkedRole",
+				"Resource": "*",
+				"Condition": {
+					"StringLike": {
+						"iam:AWSServiceName": "securityhub.amazonaws.com"
+					}
+				}
+			}
+		]
+}

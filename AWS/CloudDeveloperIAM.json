@@ -1,0 +1,252 @@
+\\ CloudDeveloperIAM
+\\ Allow developers to create application roles and policies, and attach
+\\ those policies to roles, provided the role has the CloudServiceBoundary policy attached.
+\\ The role and policy names MUST start with App- or with 'Cust-'.
+\\ See: https://aws.amazon.com/blogs/security/delegate-permission-management-to-developers-using-iam-permissions-boundaries/
+\\ See: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_examples.html
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_operators.html
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html
+\\ https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html
+\\ https://github.com/aws/aws-cdk/issues/3242
+{
+	"PolicyName": "CloudDeveloperIAM",
+	"PolicyDescription": "Allow developers to conditionally create application roles and policies, and attach policies thereto",
+	"Version" : "2012-10-17",
+	"Statement" : [
+		{
+			"Sid": "ProtectRolesAndPolicies20191128",
+			"Effect": "Deny",
+			"Action": [
+				"iam:Create*",
+				"iam:Delete*",
+				"iam:Put*",
+				"iam:Update*",
+				"iam:Attach*",
+				"iam:Detach*",
+				"iam:Tag*",
+				"iam:Untag*",
+				"iam:Upload*",
+				"iam:Set*"
+			],
+			"Resource": [
+				"arn:aws:iam::*:role/Cloud*",
+				"arn:aws:iam::*:policy/Cloud*"
+			]
+		},
+		{
+			"Sid": "AllowRoleCreation20191101",
+			"Effect": "Allow",
+			"Action": [
+				"iam:CreateRole",
+				"iam:PutRolePermissionsBoundary",
+				"iam:AttachRolePolicy",
+				"iam:DetachRolePolicy",
+				"iam:DeleteRolePolicy",
+				"iam:PutRolePolicy"
+			],
+			"Resource": "arn:aws:iam::<ACCOUNT_NUMBER>:role/*",
+			"Condition": {
+				"StringEquals": {
+					"iam:PermissionsBoundary":     
+						"arn:aws:iam::<ACCOUNT_NUMBER>:policy/CloudServiceBoundary"
+					}
+				}
+		},
+		{
+			"Sid": "AllowUserCreation20191101",
+			"Effect": "Allow",
+			"Action": [
+				"iam:CreateUser",
+				"iam:DeleteUser",
+				"iam:DeleteRole",
+				"iam:PutUserPermissionsBoundary",
+				"iam:UpdateUser",
+				"iam:AttachUserPolicy",
+				"iam:DetachUserPolicy",
+				"iam:*AccessKey",
+                "iam:*ServiceSpecificCredential*",
+                "iam:*SigningCertificate*",
+				"iam:PutUserPolicy"
+				],
+			"Resource": [
+				"arn:aws:iam::<ACCOUNT_NUMBER>:user/*",
+				"arn:aws:iam::<ACCOUNT_NUMBER>:role/*"
+			],
+			"Condition": {
+				"StringEquals": {
+					"iam:PermissionsBoundary":     
+						"arn:aws:iam::<ACCOUNT_NUMBER>:policy/CloudServiceBoundary"
+					}
+				}
+		},
+		{	// THERE ARE NO AVAILABLE CONDITIONS EXCEPT FOR A TAG VALUE!!!!
+			// IDEA: Allow only if a certain tag name doesn't exist.
+			"Sid": "AllowUserUncontrolled20191010",
+			"Effect": "Allow",
+			"Action": [
+				"iam:DeleteUser",
+				"iam:UpdateUser",
+                "iam:UpdateRole*",
+				"iam:*LoginProfile",
+				"iam:*AccessKey",
+                "iam:*ServiceSpecificCredential*",
+                "iam:*SigningCertificate*"
+				],
+			"Resource": "arn:aws:iam::<ACCOUNT_NUMBER>:user/*"
+		},
+		{
+			"Sid": "AllowIAMActions20191003",
+			"Effect": "Allow",
+			"Action": [
+				"iam:CreatePolicy",
+                "iam:DeletePolicy",
+				"iam:CreatePolicyVersion",
+				"iam:DeletePolicyVersion",
+				"iam:CreateInstanceProfile",
+				"iam:DeleteInstanceProfile",
+				"iam:AddRoleToInstanceProfile",
+				"iam:RemoveRoleFromInstanceProfile",
+				"iam:SetDefaultPolicyVersion",
+				"iam:DeleteRole",
+				"iam:DeleteRolePolicy",
+				"iam:DetachRolePolicy",
+				"iam:PutRolePolicy",
+                "iam:PassRole",
+                "iam:TagRole",
+                "iam:UntagRole",
+                "iam:UpdateRoleDescription",
+				"iam:UpdateAssumeRolePolicy",
+				"iam:DeleteUser",
+				"iam:DetachUserPolicy",
+				"iam:DeleteUserPolicy",
+				"iam:UpdateAccessKey",
+				"iam:UpdateSSHPublicKey",
+				"iam:UploadSSHPublicKey",
+				"iam:TagUser",
+				"iam:UntagUser"
+			],
+			"Resource": [
+				"arn:aws:iam::<ACCOUNT_NUMBER>:policy/*",
+                "arn:aws:iam::<ACCOUNT_NUMBER>:instance-profile/*",
+				"arn:aws:iam::<ACCOUNT_NUMBER>:user/*",
+				"arn:aws:iam::<ACCOUNT_NUMBER>:role/*"
+			]
+		},
+		{
+			\\ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html
+			"Sid": "EC2RoleInstances20101011",
+			"Effect": "Allow",
+			"Action": [
+				"ec2:RunInstances",
+				"ec2:AssociateIamInstanceProfile",
+				"ec2:ReplaceIamInstanceProfileAssociation",
+				"iam:PassRole"
+				],
+			"Resource": "*"
+		},
+		{
+			"Sid": "AllowServiceLinkedRoles20191002",
+			"Effect": "Allow",
+			"Action": [
+                "iam:CreateServiceLinkedRole",
+                "iam:DeleteServiceLinkedRole",
+				"iam:GetServiceLinkedRoleDeletionStatus"
+			],
+			"Resource": "arn:aws:iam::*:role/aws-service-role/*"
+		},
+        {
+            "Sid": "AllowInstanceProfiles20191002",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateInstanceProfile",
+                "iam:DeleteInstanceProfile",
+                "iam:AddRoleToInstanceProfile",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:PassRole"
+            ],
+            "Resource": [
+				"arn:aws:iam::*:role/aws-service-role/*",
+                "arn:aws:iam::*:instance-profile/aws-service-role/*"
+            ]
+        },
+        {
+            "Sid": "AllowEMRRoles05Sep19",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:PassRole",
+                "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:CreateInstanceProfile",
+                "iam:DeleteInstanceProfile",
+                "iam:AddRoleToInstanceProfile",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:CreateServiceLinkedRole",
+                "iam:DeleteServiceLinkedRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:role/EMR_DefaultRole",
+                "arn:aws:iam::*:role/EMR_EC2_DefaultRole",
+                "arn:aws:iam::*:role/EMR_AutoScaling_DefaultRole",
+                "arn:aws:iam::*:instance-profile/EMR_EC2*",
+                "arn:aws:iam::*:role/aws-service-role/elasticmapreduce.amazonaws.com/*",
+                "arn:aws:iam::*:role/ddns-lambda-role"
+            ]
+        },
+        {
+            "Sid": "AllowAttachingServicePoliciesToServiceRolesOnly05Sep19",
+            "Effect": "Allow",
+            "Action": [
+                "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "ArnEquals": {
+                    "iam:PolicyARN": [
+						"arn:aws:iam::*:policy/ServicePolicy*",
+                        "arn:aws:iam::*:policy/AmazonElasticMapReduce*"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "AssumeRoleRestricted20191113",
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": "*",
+			"Condition": {
+				"StringEquals": {
+					"iam:PermissionsBoundary":     
+						"arn:aws:iam::<ACCOUNT_NUMBER>:policy/CloudServiceBoundary"
+					}
+				}
+        }
+	]
+}
+\\		{
+\\			"Sid": "ProtectSAMLRoles20191003",
+\\			"Effect": "Deny",
+\\			"Action": [
+\\				"iam:Create*",
+\\				"iam:Delete*",
+\\                "iam:Put*",
+\\               "iam:Update*",
+\\				"iam:Attach*",
+\\				"iam:Detach*",
+\\				"iam:Tag*",
+\\				"iam:Untag*",
+\\				"iam:Upload*",
+\\				"iam:Set*"
+\\			],
+\\			"Resource": "arn:aws:iam::*:role/*",
+\\			"Condition": {
+\\				"StringLikeIfExists": {
+\\					"saml:aud": "https:*"
+\\					}
+\\				}
+\\		},

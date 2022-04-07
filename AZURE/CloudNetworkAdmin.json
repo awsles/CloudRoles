@@ -1,0 +1,79 @@
+{
+    "Name":  "Cloud Network Admin",
+    "Id":  "",			// ID of EXISTING role definition (if new, leave as "")
+    "Description":  "Allows configuring of Network resources, NSGs, and PaaS firewalls",
+    "Actions":  [
+                    "*/read",
+                    "Microsoft.Resources/*",
+                    "Microsoft.DomainRegistration/*",
+                    "Microsoft.ClassicCompute/domainNames/*",
+                    "Microsoft.ClassicCompute/virtualMachines/networkinterfaces/*",
+                    "Microsoft.ClassicCompute/virtualMachines/associatedNetworkSecurityGroups/*",
+                    "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/*",
+                    "Microsoft.ContainerInstance/locations/deleteVirtualNetworkOrSubnets/action",
+                    "Microsoft.ContainerRegistry/locations/deleteVirtualNetworkOrSubnets/action",
+                    "Microsoft.ClassicNetwork/*",
+                    "Microsoft.Network/*",
+                    "Microsoft.Insights/alertRules/*",
+                    "Microsoft.Resources/deployments/*",
+                    "Microsoft.ResourceHealth/availabilityStatuses/read",
+                    "Microsoft.Resources/subscriptions/resourceGroups/read",
+                    "Microsoft.DevTestLab/labs/virtualNetworks/*",
+                    "Microsoft.Support/*",
+                    "Microsoft.Cache/redis/firewallRules/*",
+                    "Microsoft.DataLakeAnalytics/accounts/firewallRules/*",
+                    "Microsoft.DataLakeStore/accounts/firewallRules/*",
+                    "Microsoft.DBforMariaDB/servers/firewallRules/*",
+                    "Microsoft.DBforMySQL/servers/firewallRules/*",
+                    "Microsoft.DBforPostgreSQL/servers/firewallRules/*",
+                    "Microsoft.DBforPostgreSQL/serversv2/firewallRules/*",
+                    "Microsoft.Sql/servers/firewallRules/*",
+                    "Microsoft.Security/webApplicationFirewalls/*",
+                    "Microsoft.DataLakeAnalytics/accounts/virtualNetworkRules/*",
+                    "Microsoft.DataLakeStore/accounts/virtualNetworkRules/*",
+                    "Microsoft.DBforMariaDB/servers/virtualNetworkRules/*",
+                    "Microsoft.DBforMySQL/servers/virtualNetworkRules/*",
+                    "Microsoft.Sql/servers/virtualNetworkRules/*",
+                    "Microsoft.DocumentDB/locations/deleteVirtualNetworkOrSubnets/*",
+                    "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules/*",
+                    "Microsoft.EventHub/namespaces/virtualNetworkRules/*",
+                    "Microsoft.EventHub/locations/deleteVirtualNetworkOrSubnets/action",
+                    "Microsoft.EventHub/namespaces/networkrulesets/*",
+                    "Microsoft.KeyVault/locations/deleteVirtualNetworkOrSubnets/action",
+                    "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings/*",
+                    "Microsoft.ServiceBus/namespaces/virtualNetworkRules/*",
+                    "Microsoft.ServiceBus/namespaces/networkrulesets/*",
+                    "Microsoft.StorSimple/managers/devices/networkSettings/*",
+                    "Microsoft.ServiceBus/locations/deleteVirtualNetworkOrSubnets/action",
+                    "Microsoft.Storage/locations/deleteVirtualNetworkOrSubnets/*",
+                    "Microsoft.Storage/storageAccounts/privateEndpointConnectionProxies/*",
+                    "Microsoft.Storage/storageAccounts/privateEndpointConnections/*",
+                    "Microsoft.Storage/storageAccounts/privateEndpointConnectionsApproval/*",
+                    "Microsoft.Storage/storageAccounts/write",
+                    "Microsoft.Security/locations/jitNetworkAccessPolicies/*",
+                    "Microsoft.ApiManagement/service/applynetworkconfigurationupdates/action",
+                    "Microsoft.Security/adaptiveNetworkHardenings/*",
+                    "Microsoft.Web/hostingEnvironments/Write",
+                    "Microsoft.Web/hostingEnvironments/Join/Action",
+                    "Microsoft.Web/hostingEnvironments/PrivateEndpointConnectionsApproval/Action",
+                    "microsoft.web/locations/deleteVirtualNetworkOrSubnets/action",
+                    "microsoft.web/serverfarms/virtualnetworkconnections/*",
+                    "microsoft.web/sites/virtualnetworkconnections/*",
+                    "microsoft.web/sites/networktraces/*",
+                    "*/networktrace/action"
+                ],
+    "NotActions":
+		[
+
+		],
+    "DataActions":
+		[
+
+		],
+    "NotDataActions":
+		[
+
+		],
+	"AssignableScopes": [],			// Omit or leave AssignableScopes blank (not used when applying definition via script)
+	"DefaultUserAssignments": []	// List of AD groups which should be assigned to the role by default across all subscriptions  
+}
