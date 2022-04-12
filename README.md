@@ -170,12 +170,12 @@ Both AWS and Azure have a number of built-in RBAC roles and policies. In AWS, so
 
 
 ## Authoritative Definitions
-The cloud provider specific definitions for the preceding roles and associated policiesy are maintained as 
+The cloud provider specific definitions for the preceding roles and associated policies are maintained as 
 commented JSON files within this GitHub repository. Consult the respective application cloud folder.
 
 The authoritative definition for AWS roles (including the list of attached policies and associated Active Directory group)
-may be found in the AWS-Roles.json file
-in the AWS folder in this repository.  For Azure, the roles are defined by the role definitions in the AZURE folder
+may be found in the AWS-Roles.json file in the AWS folder in this repository.
+For Azure, the roles are defined by the role definitions in the AZURE folder
 of this repository (there is no need for a master list as roles in Azure are defined differently).
 
 ---
