@@ -1,8 +1,13 @@
 # CloudRoles
-This respository contains the role / policy definitions for AWS and Azure along with associated tools.
+One of the challenges with user role and policy management is that the number of definitions
+can grow and become unwieldly.
+Sometimes, the *Principle of Least Privilege* is treated more like a law when it shouldn't be.
 
-**NOTE:** The roles defined in this repository have not been updated to reflect new cloud services
-which may be available.
+This respository contains role and policy definitions for AWS and Azure which
+balances privileges with manageability -- without sacrificing risk.  
+
+**NOTE:** The roles and policies defined in this repository should be carefully reviewed
+to meet your specific business and security needs before you deploy them into your environment.
 
 # Standard Roles
 User roles (used for cloud interactive login) shall have standardized role definitions (naming and permissions) across
@@ -14,7 +19,6 @@ It is important to note that the standard roles herein relate to cloud managemen
 specific to data access (although some roles will include a level of data access). Data access roles are
 outside the scope.
 
-Within the standard user roles, roles are either Mandatory, Recommended, or Optional.
 Most roles are available in all environments. However, a few roles are only available in select environments
 (for example, developer roles are only available in development and build pipeline environments).
 
@@ -23,7 +27,7 @@ so the actual names as it appears within AWS will have spaces removed.
 Furthermore, role names in AWS may be prefixed by the environment and AWS account name.
 
 Within AWS, the permissions associated with a role are defined in Policy, whereas in Azure, thet are defined by roles.
-In both cloud environments, the names are all share a common prefix, which is usually "Cloud".
+In both cloud environments, the names are all share a common prefix, (e.g. "Cloud").
 You can get a list of AWS services and IAM policy permissions at https://github.com/leswaters/AwsServices.
 
 
@@ -45,7 +49,7 @@ For AWS, roles (policies) are always defined at the account level.
 
 
 ## Core Roles
-There are core roles which SHOULD appear in every AWS account and Azure subscription. These include:
+There are core roles which generally appear in every AWS account and Azure subscription. These include:
 
 :white_check_mark: **Cloud Admin** -- Provides full administrative access including user access management rights.
 
@@ -71,7 +75,7 @@ Typically, this is the follow-on role for developers in the Pre-Production and p
 
 
 ## Optional Roles
-In addition to the mandatory roles, there are roles which should also be included in many, if not most, circumstances.
+In addition to the above roles, there are roles which may also be included in many circumstances as needed.
 Some roles may only be suitable for certain applications (e.g., "Cloud Data Scientist" role).
 These are:
 
