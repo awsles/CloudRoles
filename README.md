@@ -2,9 +2,8 @@
 One of the challenges with user role and policy management is that the number of definitions
 can grow and become unwieldly.
 Sometimes, the *Principle of Least Privilege* is treated more like a law when it shouldn't be.
-
-This respository contains role and policy definitions for AWS and Azure which
-balances privileges with manageability -- without sacrificing risk.  
+This respository contains role and policy guidance and definitions for AWS and Azure which
+balance privileges with manageability -- without sacrificing much risk.  
 
 **NOTE:** The roles and policies defined in this repository should be carefully reviewed
 to meet your specific business and security needs before you deploy them into your environment.
